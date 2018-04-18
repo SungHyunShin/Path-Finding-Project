@@ -26,7 +26,8 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
     set< pair<int,int> > marked;
     frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, make_pair(-1,-1)));
 
-    int x; 
+    int x,total;
+    total = 0; 
     pair<int, int> v, u;
 
     while(!frontier.empty()){
@@ -38,7 +39,9 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         if(marked.find(v) != marked.end()){
             continue;
         }
-
+        cout << "GOING TO " << v.first << " " << v.second << endl;
+        
+        total += x;
         ans.push_back(v);
         
         marked.insert(v);
@@ -48,20 +51,25 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         }
 
         if(v.first-1 >= 0){
+            cout << "ABOVE " << v.first-1 << " " << v.second << " " << graph[v.first-1][v.second] << endl;
             frontier.push(make_tuple(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v));
         }
         if(v.first+1 != rows){
+            cout << "BELOW " << v.first+1 << " " << v.second << " " << graph[v.first+1][v.second] << endl;
             frontier.push(make_tuple(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v));
         }
         if(v.second-1 >= 0){
+            cout << "LEFT " << v.first << " " << v.second-1 << " " << graph[v.first][v.second-1] << endl;
             frontier.push(make_tuple(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v));
         }
         if(v.second+1 != cols){
+            cout << "RIGHT " << v.first << " " << v.second+1 << " " << graph[v.first][v.second+1] << endl;
             frontier.push(make_tuple(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v));
         }
     }
-    
-    /*for(auto it = ans.begin(); it != ans.end(); it++){
+    /*cout << total << endl;
+
+    for(auto it = ans.begin(); it != ans.end(); it++){
         cout << it->first << " " << it->second << endl;
     }*/
 
@@ -117,7 +125,7 @@ int main(int argc, char *argv[]) {
 
         cin >> RUNNER_START.first >> RUNNER_START.second;
         cin >> RUNNER_END.first >> RUNNER_END.second;
-
+        cin.ignore(256,'\n');
         dijkstras(tileTable, RUNNER_START, RUNNER_END, cols, rows);
 
         for(int i = 0; i < rows; i++){
