@@ -48,16 +48,16 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         }
 
         if(v.first-1 >= 0){
-            frontier.push(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v);
+            frontier.push(make_tuple(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v));
         }
         if(v.first+1 != rows){
-            frontier.push(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v);
+            frontier.push(make_tuple(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v));
         }
         if(v.second+1 >= 0){
-            frontier.push(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v);
+            frontier.push(make_tuple(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v));
         }
         if(v.second+1 != cols){
-            frontier.push(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v);
+            frontier.push(make_tuple(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v));
         }
     }
 }
