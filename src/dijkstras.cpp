@@ -53,13 +53,18 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         if(v.first+1 != rows){
             frontier.push(make_tuple(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v));
         }
-        if(v.second+1 >= 0){
+        if(v.second-1 >= 0){
             frontier.push(make_tuple(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v));
         }
         if(v.second+1 != cols){
             frontier.push(make_tuple(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v));
         }
     }
+    
+    /*for(auto it = ans.begin(); it != ans.end(); it++){
+        cout << it->first << " " << it->second << endl;
+    }*/
+
 }
 
 // Main Execution
