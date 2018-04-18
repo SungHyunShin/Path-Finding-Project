@@ -1,8 +1,47 @@
 // dijsktras.cpp
 #include <iostream>
 #include <map>
+#include <tuple>
+#include <queue>
+#include <vector>
+#include <set>
 
 using namespace std;
+
+struct Compare{
+    public:
+        bool operator()(tuple<int, pair<int, int>, pair<int, 
+        int>>n1, tuple<int, pair<int, int>, pair<int, int>>n2){
+            return get<0>(n1) > get<0>(n2);
+        }
+}
+
+// Dijkstra's Algorithm
+void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd){
+    priority_queue<tuple<int, pair<int, int>, pair<int, int> >, 
+    vector<tuple<int, pair<int, int>, pair<int, int> > >,
+    Compare> frontier;
+
+    set< pair<int,int> > marked;
+    frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, runnerStart));
+
+    int x; 
+    pair<int, int> v, u;
+
+    while(!frontier.empty()){
+        x = get<0>(frontier.top());
+        v = get<1>(frontier.top());
+        u = get<2>(frontier.top());
+        frontier.pop();
+
+        if(marked.find(v) != marked.end()){
+            continue;
+        }
+
+        marked.insert(v);
+        
+    }
+}
 
 // Main Execution
 
@@ -34,15 +73,17 @@ int main(int argc, char *argv[]) {
         cols = stoi(cols_str);
 
         // make table
-        char **tileTable = new char*[rows];
+        int **tileTable = new int*[rows];
         for(int i = 0; i < rows; i++){
-            tileTable[i] = new char[cols];
+            tileTable[i] = new int[cols];
         }
 
         // fill table
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                cin >> tileTable[i][j];
+                char tmp;
+                cin >> tmp;
+                tileTable[i][j] = weightsMap.find(tmp).second();
             }
         }
 
