@@ -39,7 +39,7 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         if(marked.find(v) != marked.end()){
             continue;
         }
-        cout << "GOING TO " << v.first << " " << v.second << endl;
+        //cout << "GOING TO " << v.first << " " << v.second << endl;
         
         total += x;
         ans.push_back(v);
@@ -51,19 +51,19 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         }
 
         if(v.first-1 >= 0){
-            cout << "ABOVE " << v.first-1 << " " << v.second << " " << graph[v.first-1][v.second] << endl;
+            //cout << "ABOVE " << v.first-1 << " " << v.second << " " << graph[v.first-1][v.second] << endl;
             frontier.push(make_tuple(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v));
         }
         if(v.first+1 != rows){
-            cout << "BELOW " << v.first+1 << " " << v.second << " " << graph[v.first+1][v.second] << endl;
+            //cout << "BELOW " << v.first+1 << " " << v.second << " " << graph[v.first+1][v.second] << endl;
             frontier.push(make_tuple(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v));
         }
         if(v.second-1 >= 0){
-            cout << "LEFT " << v.first << " " << v.second-1 << " " << graph[v.first][v.second-1] << endl;
+            //cout << "LEFT " << v.first << " " << v.second-1 << " " << graph[v.first][v.second-1] << endl;
             frontier.push(make_tuple(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v));
         }
         if(v.second+1 != cols){
-            cout << "RIGHT " << v.first << " " << v.second+1 << " " << graph[v.first][v.second+1] << endl;
+            //cout << "RIGHT " << v.first << " " << v.second+1 << " " << graph[v.first][v.second+1] << endl;
             frontier.push(make_tuple(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v));
         }
     }
