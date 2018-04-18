@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
             for(int j = 0; j < cols; j++){
                 char tmp;
                 cin >> tmp;
-                tileTable[i][j] = weightsMap.find(tmp).second();
+                tileTable[i][j] = weightsMap[tmp];
             }
         }
 
@@ -112,7 +112,8 @@ int main(int argc, char *argv[]) {
 
         cin >> RUNNER_START.first >> RUNNER_START.second;
         cin >> RUNNER_END.first >> RUNNER_END.second;
-        
+
+        dijkstras(tileTable, RUNNER_START, RUNNER_END, cols, rows);
 
         for(int i = 0; i < rows; i++){
             delete[] tileTable[i];
