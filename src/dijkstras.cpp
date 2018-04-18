@@ -5,6 +5,7 @@
 #include <queue>
 #include <vector>
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,16 +15,16 @@ struct Compare{
         int>>n1, tuple<int, pair<int, int>, pair<int, int>>n2){
             return get<0>(n1) > get<0>(n2);
         }
-}
+};
 
 // Dijkstra's Algorithm
-void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd){
-    priority_queue<tuple<int, pair<int, int>, pair<int, int> >, 
-    vector<tuple<int, pair<int, int>, pair<int, int> > >,
-    Compare> frontier;
+void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd,int cols, int rows){
+    priority_queue<tuple<int, pair<int, int>, pair<int, int> >, vector< tuple< int, pair<int, int>, pair<int, int> > >, Compare> frontier;
+
+    vector<pair<int,int>> ans;
 
     set< pair<int,int> > marked;
-    frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, runnerStart));
+    frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, make_pair(-1,-1)));
 
     int x; 
     pair<int, int> v, u;
@@ -38,8 +39,26 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
             continue;
         }
 
+        ans.push_back(v);
+        
         marked.insert(v);
         
+        if(v == runnerEnd){
+            break;
+        }
+
+        if(v.first-1 >= 0){
+            frontier.push(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v);
+        }
+        if(v.first+1 != rows){
+            frontier.push(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v);
+        }
+        if(v.second+1 >= 0){
+            frontier.push(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v);
+        }
+        if(v.second+1 != cols){
+            frontier.push(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v);
+        }
     }
 }
 
@@ -93,6 +112,12 @@ int main(int argc, char *argv[]) {
 
         cin >> RUNNER_START.first >> RUNNER_START.second;
         cin >> RUNNER_END.first >> RUNNER_END.second;
+        
+
+        for(int i = 0; i < rows; i++){
+            delete[] tileTable[i];
+        }
+        delete[] tileTable;
     }
 
     return 0;
