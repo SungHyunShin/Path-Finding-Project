@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        // parse runner start and end
         pair<int,int> RUNNER_START;
         pair<int,int> RUNNER_END;
 
