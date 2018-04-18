@@ -1,6 +1,7 @@
 // dijsktras.cpp
 #include <iostream>
 #include <map>
+
 using namespace std;
 
 // Main Execution
@@ -40,6 +41,11 @@ int main(int argc, char *argv[]) {
 
         // fill table
 
+        pair<int,int> RUNNER_START;
+        pair<int,int> RUNNER_END;
+
+        cin >> RUNNER_START.first >> RUNNER_START.second;
+        cin >> RUNNER_END.first >> RUNNER_END.second;
     }
 
     return 0;
