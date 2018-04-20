@@ -1,5 +1,5 @@
-# sshin1 nmarcopo
 #!/usr/bin/env python3
+# sshin1 nmarcopo
 import sys
 import random
 
