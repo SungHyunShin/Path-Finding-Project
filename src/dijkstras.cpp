@@ -44,17 +44,17 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
             break;
         }
         
-        if(v.first-1 >= 0){
-            frontier.push(make_tuple(graph[v.first-1][v.second]+x,make_pair(v.first-1,v.second),v));
-        }
-        if(v.first+1 != rows){
-            frontier.push(make_tuple(graph[v.first+1][v.second]+x,make_pair(v.first+1,v.second),v));
-        }
         if(v.second-1 >= 0){
             frontier.push(make_tuple(graph[v.first][v.second-1]+x,make_pair(v.first,v.second-1),v));
         }
+        if(v.first-1 >= 0){
+            frontier.push(make_tuple(graph[v.first-1][v.second]+x,make_pair(v.first-1,v.second),v));
+        }
         if(v.second+1 != cols){
             frontier.push(make_tuple(graph[v.first][v.second+1]+x,make_pair(v.first,v.second+1),v));
+        }
+        if(v.first+1 != rows){
+            frontier.push(make_tuple(graph[v.first+1][v.second]+x,make_pair(v.first+1,v.second),v));
         }
     }
     // path doesn't include cost of the end node
