@@ -19,17 +19,15 @@ struct Compare{
 
 // Dijkstra's Algorithm
 void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd,int cols, int rows){
+    // frontier is a priority queue with cost, destination, source
     priority_queue<tuple<int, pair<int, int>, pair<int, int> >, vector< tuple< int, pair<int, int>, pair<int, int> > >, Compare> frontier;
+    map <pair<int,int>,pair<pair<int,int>,int>> marked; // key is destination, value is pair of source and cost
+    int x; // path cost
+    pair<int, int> v, u; // node v is the node that node u is going to. v is destination, u is source
+    vector<pair<int,int>> ans; //path
 
-    vector<pair<int,int>> ans;
-
-    set< pair<int,int> > marked;
-    frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, make_pair(-1,-1)));
-
-    int x,total;
-    total = 0; 
-    pair<int, int> v, u;
-
+    frontier.push(make_tuple(graph[runnerStart.first][runnerStart.second], runnerStart, runnerStart)); // cost, destination, source
+    
     while(!frontier.empty()){
         x = get<0>(frontier.top());
         v = get<1>(frontier.top());
@@ -39,40 +37,38 @@ void dijkstras(int **graph, pair<int, int> runnerStart, pair<int, int> runnerEnd
         if(marked.find(v) != marked.end()){
             continue;
         }
-        //cout << "GOING TO " << v.first << " " << v.second << endl;
         
-        total += x;
-        ans.push_back(v);
-        
-        marked.insert(v);
+        marked[v]=make_pair(u,x);
         
         if(v == runnerEnd){
             break;
         }
-
+        
         if(v.first-1 >= 0){
-            //cout << "ABOVE " << v.first-1 << " " << v.second << " " << graph[v.first-1][v.second] << endl;
-            frontier.push(make_tuple(graph[v.first-1][v.second],make_pair(v.first-1,v.second),v));
+            frontier.push(make_tuple(graph[v.first-1][v.second]+x,make_pair(v.first-1,v.second),v));
         }
         if(v.first+1 != rows){
-            //cout << "BELOW " << v.first+1 << " " << v.second << " " << graph[v.first+1][v.second] << endl;
-            frontier.push(make_tuple(graph[v.first+1][v.second],make_pair(v.first+1,v.second),v));
+            frontier.push(make_tuple(graph[v.first+1][v.second]+x,make_pair(v.first+1,v.second),v));
         }
         if(v.second-1 >= 0){
-            //cout << "LEFT " << v.first << " " << v.second-1 << " " << graph[v.first][v.second-1] << endl;
-            frontier.push(make_tuple(graph[v.first][v.second-1],make_pair(v.first,v.second-1),v));
+            frontier.push(make_tuple(graph[v.first][v.second-1]+x,make_pair(v.first,v.second-1),v));
         }
         if(v.second+1 != cols){
-            //cout << "RIGHT " << v.first << " " << v.second+1 << " " << graph[v.first][v.second+1] << endl;
-            frontier.push(make_tuple(graph[v.first][v.second+1],make_pair(v.first,v.second+1),v));
+            frontier.push(make_tuple(graph[v.first][v.second+1]+x,make_pair(v.first,v.second+1),v));
         }
     }
-    /*cout << total << endl;
-
+    // path doesn't include cost of the end node
+    marked[v].second = marked[v].second - graph[v.first][v.second];
+    cout << marked[v].second << endl;
+    
+    while(v != runnerStart){
+        ans.insert(ans.begin(),v);
+        v = marked[v].first;
+    }
+    ans.insert(ans.begin(),runnerStart);
     for(auto it = ans.begin(); it != ans.end(); it++){
         cout << it->first << " " << it->second << endl;
-    }*/
-
+    }
 }
 
 // Main Execution
