@@ -1,3 +1,5 @@
+Nicholas Marcopoli nmarcopo, Sung Hyun Shin sshin1
+
 Project 05: Path Finding
 ========================
 
