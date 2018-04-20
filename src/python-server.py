@@ -14,7 +14,7 @@ import sys
 # Constants
 
 WWW_PORT = 9001 #port number
-WWW_ROOT = os.path.abspath('../www')
+WWW_ROOT = os.path.abspath('./www')
 
 # Utility Functions
 
@@ -54,7 +54,7 @@ class WWWHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        p = subprocess.Popen(['./dijkstras'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        p = subprocess.Popen(['./src/dijkstras'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         d = [map(int, line.split()) for line in p.communicate(data)[0].splitlines()]
         json.dump({'path': d[1:], 'cost': d[0]}, self.wfile)
 
